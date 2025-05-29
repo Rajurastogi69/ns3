@@ -1,0 +1,11 @@
+FTP Protocol:
+Open ns-allinone-3.35->ns-3.35->example->tcp->copy "tcp-large-transfer" and paste it in scratch and compile it:
+
+Compile Command: ./waf --run scratch/tcp-large-transfer
+
+Open it and add #include "ns3/netanim-module.h"
+on line 173 "AnimationInterface anim("ftp-transfer.xml")" compile it again and run in terminal netanim-3.108 and then run ./NetAnim
+
+After graph go to packets and export table and in ns 3.35 rename it to ftp-transfer.txt then create a new text file and paste any .plt code and save it to same name.
+
+After come to terminal and enter gnuplot.plt and then open the ns 3.35 and open ftp-transfer.pdf.

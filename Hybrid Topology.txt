@@ -1,0 +1,48 @@
+Hybrid Topology:
+Copy the second.cc file from nsallinone->ns3.38->examples->tutorial and paste it to 
+nsallinone-3.38->ns-3.38->scratch and paste it
+Open second.cc and add 
+
+#include "ns3/netanim-module.h"
+#include "ns3/mobility-module.h"
+=========================================================================
+Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
+pointToPoint.EnablePcapAll ("second");
+csma.EnablePcap ("second", csmaDevices.Get (1), true);
+
+after the above code add this code:
+
+//For Net Anim
+MobilityHelper mobility;
+mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
+mobility.Install(p2pNodes);
+mobility.Install(csmaNodes);
+AnimationInterface anim("second.xml");
+AnimationInterface::SetConstantPosition (p2pNodes.Get(0), 10, 25);
+AnimationInterface ::SetConstantPosition(p2pNodes.Get(1), 20,25);
+AnimationInterface ::SetConstantPosition(csmaNodes.Get(1),40,25);
+AnimationInterface ::SetConstantPosition(csmaNodes.Get(2),50,25);
+AnimationInterface ::SetConstantPosition(csmaNodes.Get(3),60,25);
+anim.EnablePacketMetadata(true);
+
+to run this file open the terminal and type:
+"cd ns-allinone-3.38/ns-3.38" after that compile the file using:
+"./waf --run scratch/second"
+After compiling cd..->cd
+ netanim-3.108/->./NetAnim after running search for second.xml file
+
+Now change the cd to cd ns-allinone-3.38/ns-3.38 and type ls *.pcap, wireshark first -0.0.pcap and wireshark second-1.0.pcap
+
+Now we need to generate a gplot.plt file:
+
+gplot.plt file to Generate Graph
+Create a text file and add this code to it and save it as "gplot.plt":
+
+set terminal pdf
+set output "Anas.pdf"
+set title "PtoP and Bus topology"
+set xlabel "Nodes"
+set ylabel "time delay"
+plot "aaa.txt" using 1: 5 with linespoint title "LAN" lw 4
+
+and in ns-allinone-3.38/ns-3.38 enter gnuplot gplot.plt.

@@ -1,0 +1,36 @@
+Hybrid LAN with Wi-Fi 
+Copy the thrid.cc file from ns-allinone->3.38->examples->tutorials and paste it to
+ns-allinone-3.38->ns-3.38->scratch and paste it 
+
+Open third.cc and add:
+#include "ns3/netanim-module.h"
+===========================================================================
+Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
+Add the below code after the above code:
+
+AnimationInterface anim("hybridWiFi.xml"); 
+AnimationInterface::SetConstantPosition (p2pNodes.Get(0), 10, 25); 
+AnimationInterface ::SetConstantPosition(csmaNodes.Get(1), 40,25); 
+anim.EnablePacketMetadata(true); 
+pointToPoint.EnablePcapAll("hybridwifi");
+
+to run this file open the terminal and type:
+"cd ns-allinone-3.38/ns-3.38" after that compile the file using:
+"./waf --run scratch/third"
+After compiling cd..->cd
+ netanim-3.108/->./NetAnim after running search for third.xml file
+
+Now we need to generate a gplot.plt file:
+
+gplot.plt file to Generate Graph
+Create a text file and add this code to it and save it as "gplot.plt":
+
+set terminal png
+set output "Lalit.png"
+set title "Point to Point Toplogy end to end delay"
+set xlabel "nodes"
+set ylabel "end to end delay"
+plot "data.txt" using 1: 5 with linespoint title "TimeDelay" lw 4,"data.txt" using 1: 6
+with linespoint title "DBR " lw 2
+
+and in ns-allinone-3.38/ns-3.38 enter gnuplot gplot.plt.

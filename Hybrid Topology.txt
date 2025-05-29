@@ -1,4 +1,4 @@
-Hybrid Topology:
+Hybrid Topology and Bus Topology:
 Copy the second.cc file from nsallinone->ns3.38->examples->tutorial and paste it to 
 nsallinone-3.38->ns-3.38->scratch and paste it
 Open second.cc and add 
